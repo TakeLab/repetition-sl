@@ -9,8 +9,9 @@
 # 2. Decoder training with sequence repetition (r=0,1,2,4,8)
 # 3. Decoder training with full/middle unmasking
 # 4. Early exit experiments (Mistral-7B only)
-# 5. Evaluation on all models
-# 6. Generate plots and tables
+# 5. Early exit experiments (Qwen3-0.6B only, layers 12 and 28)
+# 6. Evaluation on all models
+# 7. Generate plots and tables
 #
 # Usage:
 #   ./scripts/run_all_experiments.sh [--train-only] [--eval-only] [--plots-only]
@@ -39,7 +40,7 @@ SEEDS="5 29 42 81 123"
 DATASETS=("conll2003" "ace" "nlupp" "absa-restaurants")
 
 # Decoder models
-DECODER_MODELS=("gemma-7b" "gemma2-2b" "gemma2-9b" "mistral-7b" "qwen3-1.7b" "qwen3-4b" "qwen3-8b")
+DECODER_MODELS=("gemma-7b" "gemma2-2b" "gemma2-9b" "mistral-7b" "qwen3-0.6b" "qwen3-1.7b" "qwen3-4b" "qwen3-8b")
 
 # Encoder models
 ENCODER_MODELS=("roberta" "modernbert")
@@ -49,6 +50,9 @@ REPEAT_COUNTS=(0 1 2 4 8)
 
 # Early exit layers (for Mistral-7B, which has 32 layers)
 EARLY_EXIT_LAYERS=(8 13 18 23)
+
+# Early exit layers for Qwen3-0.6B
+QWEN3_0_6B_EARLY_EXIT_LAYERS=(12 28)
 
 # Parse arguments
 TRAIN_ONLY=false
@@ -196,13 +200,27 @@ if [ "$PLOTS_ONLY" = false ] && [ "$EVAL_ONLY" = false ]; then
             done
         done
     done
+
+    echo ""
+    echo "=============================================="
+    echo "PHASE 5: Early exit experiments (Qwen3-0.6B)"
+    echo "=============================================="
+    echo ""
+
+    for dataset in "${DATASETS[@]}"; do
+        for r in 1 2 4 8; do
+            for exit_layer in "${QWEN3_0_6B_EARLY_EXIT_LAYERS[@]}"; do
+                train_model "qwen3-0.6b" "repeat" "$dataset" "$r" "$exit_layer"
+            done
+        done
+    done
 fi
 
 # Evaluation phase
 if [ "$PLOTS_ONLY" = false ] && [ "$TRAIN_ONLY" = false ]; then
     echo ""
     echo "=============================================="
-    echo "PHASE 5: Evaluating all models"
+    echo "PHASE 6: Evaluating all models"
     echo "=============================================="
     echo ""
 
@@ -230,11 +248,20 @@ if [ "$PLOTS_ONLY" = false ] && [ "$TRAIN_ONLY" = false ]; then
         done
     done
 
-    # Evaluate early exit experiments
+    # Evaluate early exit experiments (Mistral-7B)
     for dataset in "${DATASETS[@]}"; do
         for r in 1 2 4 8; do
             for exit_layer in "${EARLY_EXIT_LAYERS[@]}"; do
                 eval_model "mistral-7b" "repeat" "$dataset" "$r" "$exit_layer"
+            done
+        done
+    done
+
+    # Evaluate early exit experiments (Qwen3-0.6B)
+    for dataset in "${DATASETS[@]}"; do
+        for r in 1 2 4 8; do
+            for exit_layer in "${QWEN3_0_6B_EARLY_EXIT_LAYERS[@]}"; do
+                eval_model "qwen3-0.6b" "repeat" "$dataset" "$r" "$exit_layer"
             done
         done
     done
@@ -244,7 +271,7 @@ fi
 if [ "$TRAIN_ONLY" = false ] && [ "$EVAL_ONLY" = false ]; then
     echo ""
     echo "=============================================="
-    echo "PHASE 6: Generating plots and tables"
+    echo "PHASE 7: Generating plots and tables"
     echo "=============================================="
     echo ""
 
