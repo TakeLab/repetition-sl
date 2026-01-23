@@ -186,14 +186,8 @@ Our main findings:
 
 ## Citation
 
-```bibtex
-@inproceedings{kukic2025sequence,
-  title={Sequence Repetition Enhances Token Embeddings and Improves Sequence Labeling with Decoder-only Language Models},
-  author={Kuki{\'c}, Matija Luka and {\v{C}}uljak, Marko and Duki{\'c}, David and Tutek, Martin and {\v{S}}najder, Jan},
-  booktitle={Proceedings of the 63rd Annual Meeting of the Association for Computational Linguistics},
-  year={2025}
-}
-```
+TBD
+
 
 ## License
 
