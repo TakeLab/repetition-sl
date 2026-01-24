@@ -1,7 +1,0 @@
-Metadata-Version: 2.4
-Name: sl_pipeline
-Version: 0.1
-Summary: Pipeline for using different models and datasets for sequence labeling
-Author: Matija Luka Kukic, David Dukic, Marko Culjak
-Dynamic: author
-Dynamic: summary
