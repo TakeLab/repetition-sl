@@ -186,7 +186,29 @@ Our main findings:
 
 ## Citation
 
-TBD
+```
+@inproceedings{kukic-etal-2026-sequence,
+    title = "Sequence Repetition Enhances Token Embeddings and Improves Sequence Labeling with Decoder-only Language Models",
+    author = "Kuki{\'c}, Matija Luka  and
+      {\v{C}}uljak, Marko  and
+      Duki{\'c}, David  and
+      Tutek, Martin  and
+      {\v{S}}najder, Jan",
+    editor = "Demberg, Vera  and
+      Inui, Kentaro  and
+      Marquez, Llu{\'i}s",
+    booktitle = "Findings of the {A}ssociation for {C}omputational {L}inguistics: {EACL} 2026",
+    month = mar,
+    year = "2026",
+    address = "Rabat, Morocco",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2026.findings-eacl.339/",
+    doi = "10.18653/v1/2026.findings-eacl.339",
+    pages = "6442--6456",
+    ISBN = "979-8-89176-386-9",
+    abstract = "Modern language models (LMs) are trained in an autoregressive manner, conditioned only on the prefix. In contrast, sequence labeling (SL) tasks assign labels to each individual input token, naturally benefiting from bidirectional context. This discrepancy has historically led SL to rely on inherently bidirectional encoder-only models. However, the rapid development of decoder-only models has raised the question of whether they can be adapted to SL. While causal mask removal has emerged as a viable technique for adapting decoder-only models to leverage the full context for SL, it requires considerable changes to the base model functionality. In this work, we explore sequence repetition (SR) as a less invasive alternative for enabling bidirectionality in decoder-only models. Through fine-tuning experiments, we show that SR inherently makes decoders bidirectional, improving the quality of token-level embeddings and surpassing encoders and unmasked decoders. Contrary to earlier claims, we find that increasing the number of repetitions does not degrade SL performance. Finally, we demonstrate that embeddings from intermediate layers are highly effective for SR, comparable to those from final layers, while being significantly more efficient to compute. Our findings underscore that SR alleviates the structural limitations of decoders, enabling more efficient and adaptable LMs and broadening their applicability to other token-level tasks."
+}
+```
 
 
 ## License
